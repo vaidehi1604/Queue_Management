@@ -1,0 +1,9 @@
+{
+	"Welcome": "Welcome",
+	"A brand new app.": "A brand new app.",
+	"email": "Email already exists!!",
+	"adminAdd":"Added successfully!!",
+	"adminLogout":"Logout successfully!!",
+	"token": "Token  generated!!",
+	"notToken": "Token not generated!!"
+}
