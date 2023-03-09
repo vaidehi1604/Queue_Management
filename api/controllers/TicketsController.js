@@ -15,11 +15,11 @@ module.exports = {
     try {
       // const {placeId}=req.params;
       
-    //  const place=await Place.findOne({id:id});
+     const place=await Place.findOne({id:id});
     //  console.log(place.id);
    
      const { username,placeId,ticketNo,processed}=req.body;
-    //  if(place.id===placeId){
+     if(place.id==placeId){
      const newTicket=await Tickets.create({
       username,
       placeId,
@@ -28,7 +28,7 @@ module.exports = {
      })
       return res.status(201).json({
         message: "ticket data successfully added!!",
-      });
+      });}
     } catch (error) {
       error: error;
       res.status(401).json({
@@ -70,11 +70,13 @@ module.exports = {
       // console.log(placeId);
       if (id == tickets.id) {
         await Tickets.updateOne({ id: id }).set({ processed: true });
-       
-        
-        // await Place.updateOne({id:placeId}).set({
-        //   unprocessTicket:unprocessTicket-1
-        // })
+       console.log('here1');
+       const places= await Place.findOne({id:tickets.placeId})
+      //  console.log(places);
+        await Place.update({id:tickets.placeId}).set({
+          unprocessTicket:places.unprocessTicket-1
+        })
+        console.log('here2');
 
         return res.status(200).json({
           message: "update sucessfully!!",

@@ -15,7 +15,7 @@ module.exports.place= {
       unique:true,
     },
     unprocessTicket:{
-      type:"number"
+      type:"Number"
     },
     owner:{
       model:"Admin"
