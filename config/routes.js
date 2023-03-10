@@ -18,20 +18,16 @@ module.exports.routes = {
   "DELETE /place/delete/:id": "PlaceController.deletePlace",
   "PATCH /place/update/:id": "PlaceController.updatePlace",
   "GET /place/get": "PlaceController.getPlace",
-  "GET /place/get/unprocess": "PlaceController.getUnprocessTicket",
   //Ticket routes
-  "POST /addticket": "TicketsController.addTickets",
-  "GET /ticket/:place": "TicketsController.showTickets",
+  "POST /addticket/:placeId": "TicketsController.addTickets",
   "PATCH /ticket/:id": "TicketsController.updateTickets",
   "PATCH /ticket": "TicketsController.updateProcess",
+  "GET /ticket/show": "TicketsController.getTicket",
 
   //User routes
-  "POST /user/signup":"UserController.userSignup",
-  "POST /user/login":"UserController.userLogin",
-  "POST /user/logout":"UserController.userLogout",
-  "GET /user/place": "PlaceController.userTicket",
-
-
-
-
+  "POST /user/signup": "UserController.userSignup",
+  "POST /user/login": "UserController.userLogin",
+  "POST /user/logout": "UserController.userLogout",
+  "GET /user/place": "UserController.userTicket",
+  "GET /user/ticket": "TicketsController.userfind",
 };

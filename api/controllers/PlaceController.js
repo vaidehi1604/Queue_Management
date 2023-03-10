@@ -8,10 +8,13 @@
 module.exports = {
   addPlace: async (req, res) => {
     try {
-      const { place, unprocessTicket } = req.body;
+     
+      const { place, unprocessTicket, prefix, tickets } = req.body;
       const newPlace = await Place.create({
         place,
         unprocessTicket,
+        prefix,
+        tickets,
       }).fetch();
       return res.send({
         message: "place added successfully!!",
@@ -24,8 +27,6 @@ module.exports = {
   //delete place
 
   deletePlace: async (req, res) => {
-    // const {place,unprocessTicket}=req.body;
-
     try {
       console.log(place);
       if (id === place.id) {
@@ -52,8 +53,7 @@ module.exports = {
     try {
       const { id } = req.params;
       const place = await Place.findOne(id);
-      // console.log(id);
-      // console.log(place);
+
       if (id === place.id) {
         await Place.updateOne({ id: id }).set(req.body);
         return res.status(200).json({
@@ -71,6 +71,7 @@ module.exports = {
       });
     }
   },
+
   //get all place
 
   getPlace: async (req, res) => {
@@ -88,25 +89,4 @@ module.exports = {
       });
     }
   },
-
-  //find user ticket with place
-  userTicket:async(req,res)=>{
-    try{
-      // const {id}=req.params
-      const places = await Place.find();
-      console.log(places);
-      return res.status(200).json({
-        message: "Unprocess Tickets with place",
-        place:places
-      });
-    }
-    catch(error){
-        return res.status(401).json({
-          message:"Ticket not found!"
-        })
-    }
-  }
-  //get all place with unprocess ticket
- 
-
 };

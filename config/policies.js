@@ -9,23 +9,28 @@
  */
 
 module.exports.policies = {
-
   /***************************************************************************
-  *                                                                          *
-  * Default policy for all controllers and actions, unless overridden.       *
-  * (`true` allows public access)                                            *
-  *                                                                          *
-  ***************************************************************************/
+   *                                                                          *
+   * Default policy for all controllers and actions, unless overridden.       *
+   * (`true` allows public access)                                            *
+   *                                                                          *
+   ***************************************************************************/
 
   // '*': true,
-  // AdminController:{
-  //   "adminLogout":"isLoggedIn"
-  // },
-  // PlaceController:{
-  //   "addPlace":"isLoggedIn"
-  // }
 
-  UserController:{
-    "userLogout":"userLoggedIn"
-  }
+  TicketsController: {
+    //change processed ticket and also update unprocess ticket
+    updateTickets: "isAdmin",
+    getTicket: "isAdmin",
+    "*": "userLoggedIn",
+  },
+  PlaceController: {
+    "*": "isAdmin",
+  },
+
+  UserController: {
+    userLogout: "isLoggedIn",
+    userTicket: "userLoggedIn",
+    "*": true,
+  },
 };

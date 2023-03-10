@@ -6,26 +6,29 @@
  */
 
 module.exports.Tickets = {
-  attributes:{
-  Tickets: {
-    username: {
-      type: "string",
-      required: true,
+  attributes: {
+    Tickets: {
+      username: {
+        type: "string",
+        required: true,
+      },
+      placeId: {
+        model: "place",
+      },
+      ticketNo: {
+        type: "number",
+        unique: true,
+      },
+      processed: {
+        type: "boolean",
+        defaultsTo: false,
+      },
+      date: {
+        type: "date",
+      },
+      owner: {
+        model: "User",
+      },
     },
-    placeId: {
-      model:"place"
-    },
-    ticketNo: {
-      type: "string",
-     unique:true
-    },
-    processed: {
-      type: "boolean",
-      defaultsTo:"false"
-    },
-    owner:{
-      model:"User"
-    }
   },
-}
 };
