@@ -26,6 +26,7 @@ module.exports.policies = {
   },
   PlaceController: {
     "addPlace": "isAdmin",
+    "getPlace":"isLoggedIn"
   },
 
   UserController: {

@@ -61,7 +61,7 @@ module.exports = {
     }
   },
 
-  //ticket process updated
+  //ticket status to process updated
 
   updateTickets: async (req, res) => {
     const lang = req.getLocale();

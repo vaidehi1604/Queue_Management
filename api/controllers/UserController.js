@@ -91,21 +91,5 @@ module.exports = {
     }
   },
 
-  //find user ticket with place
-  userTicket: async (req, res) => {
-    const lang = req.getLocale();
 
-    try {
-      const places = await Place.find();
-      console.log(places);
-      return res.status(200).json({
-        message: sails.__("unTicket", lang),
-        place: places,
-      });
-    } catch (error) {
-      return res.status(500).json({
-        message: sails.__("notTicket", lang),
-      });
-    }
-  },
 };

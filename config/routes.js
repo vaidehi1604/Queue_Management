@@ -28,6 +28,6 @@ module.exports.routes = {
   "POST /user/signup": "UserController.userSignup",
   "POST /user/login": "UserController.userLogin",
   "POST /user/logout": "UserController.userLogout",
-  "GET /user/place": "UserController.userTicket",
+  // "GET /user/place": "UserController.userTicket",
   "GET /user/ticket": "TicketsController.userfind",
 };
