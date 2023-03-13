@@ -8,15 +8,12 @@
 module.exports.Tickets = {
   attributes: {
     Tickets: {
-      username: {
-        type: "string",
-        required: true,
-      },
+     
       placeId: {
         model: "place",
       },
       ticketNo: {
-        type: "number",
+        type: "string",
         unique: true,
       },
       processed: {

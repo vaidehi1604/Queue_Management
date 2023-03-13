@@ -20,16 +20,9 @@ module.exports.place = {
         type: "string",
         unique: true,
       },
-      owner: {
-        model: "Admin",
-      },
       tickets: {
-        // collection: "tickets",
-        // via: "placeId",
-
-        type:"number",
-        columnType:"array",
-        defaultTo:[]
+        collection: "tickets",
+        via: "placeId",
       },
     },
   },

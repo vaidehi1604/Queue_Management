@@ -7,31 +7,32 @@ module.exports = {
   //user signup
 
   userSignup: async (req, res) => {
+    const lang = req.getLocale();
     const { username, email, password, role } = req.body;
-    
+
     bcrypt.hash(password, 10, async (err, hash) => {
       try {
-     const users=await User.find({email:req.body.email});
-     if (users.length >= 1) {
-      return res.status(409).json({
-        message: "Email already exists",
-      });
-    }
-       
+        const users = await User.find({ email: req.body.email });
+        if (users.length >= 1) {
+          return res.status(409).json({
+            message: sails.__("email", lang),
+          });
+        }
+
         const newUser = await User.create({
           username,
           email,
           password: hash,
           role,
         }).fetch();
-        
+
         console.log(newUser);
         return res.status(201).json({
-          message: "Data added successfully!!!",
+          message: sails.__("addData", lang),
         });
       } catch (error) {
-        return res.status(401).json({
-          message: "Data not added!!",
+        return res.status(500).json({
+          message: sails.__("notAdded", lang),
         });
       }
     });
@@ -39,10 +40,12 @@ module.exports = {
 
   //user login
   userLogin: async (req, res) => {
+    const lang = req.getLocale();
+
     try {
-    const { email, password } = req.body;
-    console.log(req.body);
-      const user = await User.findOne({ email:email });
+      const { email, password } = req.body;
+      console.log(req.body);
+      const user = await User.findOne({ email: email });
       console.log(user);
       const checkpass = await bcrypt.compare(password, user.password);
       if (checkpass === true) {
@@ -53,75 +56,55 @@ module.exports = {
       console.log(token);
       await User.updateOne({ email: email }, { token: token });
       console.log(token);
-      return res.status(201).json({
-        message: "Token generated",
+      return res.status(200).json({
+        message: sails.__("token", lang),
+
         token: token,
       });
     } catch (error) {
       error: error;
-      return res.status(401).json({
-        message: "Token not generated!!",
+      return res.status(500).json({
+        message: sails.__("notToken", lang),
       });
     }
   },
 
   //user logout
 
-
-
   userLogout: async (req, res) => {
+    const lang = req.getLocale();
+
     try {
-      const  {email}= req.body;
+      const { email } = req.body;
       console.log(email);
-      const users =await User.findOne({email})
+      const users = await User.findOne({ email });
       console.log(users);
-const userUpdate=await User.updateOne({email}).set({token:" "})
+      const userUpdate = await User.updateOne({ email }).set({ token: " " });
 
       return res.status(200).json({
-        message: "Logout successfully!!",
+        message: sails.__("userLogout", lang),
       });
     } catch (error) {
-      return res.status(200).json({
-        message: "logout not successfull!!",
+      return res.status(500).json({
+        message: sails.__("notLogout", lang),
       });
     }
   },
 
-
-  // userLogout: async (req, res) => {
-  //   try {
-  //     const { id } = await req.body;
-  //     console.log(id);
-
-  //     const user = await User.findOne({id:id});
-  //     console.log(user);
-  //     // if(id==user.id){
-  //       const userUpdate = await User.updateOne({ id: id },{ token: " " });
-  //     console.log(userUpdate);
-  //     // }
-  //     return res.status(200).json({
-  //       message: "Logout successfully!!",
-  //     });
-  //   } catch (error) {
-  //     return res.status(200).json({
-  //       message: "logout not successfull!!",
-  //     });
-  //   }
-  // },
-
   //find user ticket with place
   userTicket: async (req, res) => {
+    const lang = req.getLocale();
+
     try {
-      // const {id}=req.params
       const places = await Place.find();
       console.log(places);
       return res.status(200).json({
-        message: "Unprocess Tickets with place",
+        message: sails.__("unTicket", lang),
         place: places,
       });
     } catch (error) {
-      return res.status(401).json({
-        message: "Ticket not found!",
+      return res.status(500).json({
+        message: sails.__("notTicket", lang),
       });
     }
   },

@@ -20,17 +20,17 @@ module.exports.policies = {
 
   TicketsController: {
     //change processed ticket and also update unprocess ticket
-    updateTickets: "isAdmin",
-    getTicket: "isAdmin",
+    "updateTickets": "isAdmin",
+    "getTicket": "isAdmin",
     "*": "userLoggedIn",
   },
   PlaceController: {
-    "*": "isAdmin",
+    "addPlace": "isAdmin",
   },
 
   UserController: {
-    userLogout: "isLoggedIn",
-    userTicket: "userLoggedIn",
+    "userLogout": "isLoggedIn",
+    "userTicket": "userLoggedIn",
     "*": true,
   },
 };

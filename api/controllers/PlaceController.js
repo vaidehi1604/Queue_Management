@@ -6,43 +6,49 @@
  */
 
 module.exports = {
+  // add place
+
   addPlace: async (req, res) => {
+    const lang = req.getLocale();
     try {
-     
-      const { place, unprocessTicket, prefix, tickets } = req.body;
+      const { place, unprocessTicket, prefix } = req.body;
       const newPlace = await Place.create({
         place,
         unprocessTicket,
         prefix,
-        tickets,
       }).fetch();
-      return res.send({
-        message: "place added successfully!!",
+      return res.status(201).send({
+        message: sails.__("addData", lang),
       });
     } catch (error) {
-      return res.send({ message: "place not added!!" });
+      return res.status(500).send({
+        message: sails.__("notAdded", lang),
+      });
     }
   },
 
   //delete place
 
   deletePlace: async (req, res) => {
+    const lang = req.getLocale();
     try {
-      console.log(place);
-      if (id === place.id) {
-        await Place.destroy({ id: id });
+      const { id } = req.params;
+      const place = await Place.find({ id: id });
+      console.log(id);
+
+      if (place) {
+        await Place.destroyOne({ id: id });
         return res.status(200).json({
-          message: "data deleted successfully ",
+          message: sails.__("deleteData", lang),
         });
       } else {
-        return res.status(200).json({
-          message: "data not found!!",
+        return res.status(404).json({
+          message: sails.__("notDeleted", lang),
         });
       }
     } catch (error) {
-      error: error;
-      return res.status(401).json({
-        message: "Data not deleted!!",
+      return res.status(500).json({
+        message: sails.__("notDeleted", lang),
       });
     }
   },
@@ -50,6 +56,8 @@ module.exports = {
   //Update place
 
   updatePlace: async (req, res) => {
+    const lang = req.getLocale();
+
     try {
       const { id } = req.params;
       const place = await Place.findOne(id);
@@ -57,17 +65,17 @@ module.exports = {
       if (id === place.id) {
         await Place.updateOne({ id: id }).set(req.body);
         return res.status(200).json({
-          message: "update sucessfully!!",
+          message: sails.__("updateData", lang),
         });
       } else {
-        return res.status(201).json({
-          message: "Data not update !!",
+        return res.status(404).json({
+          message: sails.__("notUpdated", lang),
         });
       }
     } catch (error) {
       error: error;
-      return res.status(401).json({
-        message: " not update !!",
+      return res.status(500).json({
+        message: sails.__("notUpdated", lang),
       });
     }
   },
@@ -75,17 +83,18 @@ module.exports = {
   //get all place
 
   getPlace: async (req, res) => {
+    const lang = req.getLocale();
     try {
       const places = await Place.find();
       console.log(places);
       return res.status(200).json({
-        message: " data get",
+        message: sails.__("getData", lang),
         placeData: places,
       });
     } catch (error) {
       error: error;
-      return res.status(401).json({
-        message: "data not get!!",
+      return res.status(500).json({
+        message: sails.__("notGet", lang),
       });
     }
   },
