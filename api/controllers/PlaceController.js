@@ -19,6 +19,7 @@ module.exports = {
       }).fetch();
       return res.status(201).send({
         message: sails.__("addData", lang),
+        newPlace:newPlace
       });
     } catch (error) {
       return res.status(500).send({
@@ -37,9 +38,10 @@ module.exports = {
       console.log(id);
 
       if (place) {
-        await Place.destroyOne({ id: id });
+        const deleted=await Place.destroyOne({ id: id });
         return res.status(200).json({
           message: sails.__("deleteData", lang),
+        
         });
       } else {
         return res.status(404).json({
@@ -63,9 +65,10 @@ module.exports = {
       const place = await Place.findOne(id);
 
       if (id === place.id) {
-        await Place.updateOne({ id: id }).set(req.body);
+       const updateplace= await Place.updateOne({ id: id }).set(req.body);
         return res.status(200).json({
           message: sails.__("updateData", lang),
+          updateplace:updateplace
         });
       } else {
         return res.status(404).json({
