@@ -16,7 +16,6 @@ module.exports = {
       const newDate = new Date().toLocaleDateString();
       const newNo = await Tickets.count({
         placeId: places.id,
-        date: newDate,
       });
       const newnum = newNo + 1;
       const { ticketNo, processed, date } = req.body;
