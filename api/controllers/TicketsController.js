@@ -23,12 +23,7 @@ module.exports = {
       const newTicket = await Tickets.create({
         placeId: req.params.placeId,
         ticketNo: places.prefix + newnum,
-        processed:
-          processed === "true"
-            ? true
-            : processed === "false"
-            ? false
-            : undefined,
+        processed:false,
         date: newDate,
       });
       return res.status(201).json({
