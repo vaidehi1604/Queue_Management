@@ -18,16 +18,17 @@ module.exports = {
         placeId: places.id,
       });
       const newnum = newNo + 1;
-      const { ticketNo, processed, date } = req.body;
 
       const newTicket = await Tickets.create({
         placeId: req.params.placeId,
         ticketNo: places.prefix + newnum,
-        processed:false,
+        processed: false,
         date: newDate,
-      });
+      }).fetch()
+      console.log(newTicket);
       return res.status(201).json({
         message: sails.__("addData", lang),
+       
       });
     } catch (error) {
       error: error;
@@ -64,15 +65,17 @@ module.exports = {
       const { id } = req.params;
       const tickets = await Tickets.findOne({ id });
       if (id == tickets.id) {
-        await Tickets.updateOne({ id: id }).set({ processed: true });
+       const processUpdate= await Tickets.updateOne({ id: id }).set({ processed: true });
 
         const places = await Place.findOne({ id: tickets.placeId });
-        await Place.update({ id: tickets.placeId }).set({
+       const unprocessTic= await Place.update({ id: tickets.placeId }).set({
           unprocessTicket: places.unprocessTicket - 1,
         });
 
         return res.status(200).json({
           message: sails.__("updateData", lang),
+          processUpdate:processUpdate,
+         
         });
       } else {
         return res.status(404).json({
