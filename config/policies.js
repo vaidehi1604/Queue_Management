@@ -23,6 +23,7 @@ module.exports.policies = {
     "updateTickets": "isAdmin",
     "getTicket": "isAdmin",
     "adminfind":"isAdmin",
+    "getPlaceTicket":"isAdmin",
     "*": "userLoggedIn",
   },
   PlaceController: {
