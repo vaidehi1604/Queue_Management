@@ -26,6 +26,7 @@ module.exports = {
         date: newDate,
         owner: req.userData.id,
       }).fetch();
+      
       console.log(newTicket);
       return res.status(201).json({
         message: sails.__("addData", lang),
@@ -81,7 +82,7 @@ module.exports = {
             message: sails.__("updateData", lang),
             processUpdate: processUpdate,
           });
-        } else {
+        }else{
           return res.status(404).json({
             message: sails.__("notUpdated", lang),
           });
@@ -105,6 +106,7 @@ module.exports = {
 
     const { processed } = req.query;
     try {
+     console.log(req.userData.id);
       const userfind = await Tickets.find({
         owner: req.userData.id,
         processed: processed === "false" ? false : true,
@@ -142,13 +144,13 @@ module.exports = {
     }
   },
 
-  //place to find
+//place to find 
 
-  getPlaceTicket: async (req, res) => {
+getPlaceTicket: async (req, res) => {
     const lang = req.getLocale();
     try {
-      const { placeId } = req.params;
-      const tickets = await Tickets.find({ placeId });
+      const {placeId}=req.params;
+      const tickets = await Tickets.find({placeId});
       console.log(tickets);
       return res.status(200).json({
         message: sails.__("getData", lang),

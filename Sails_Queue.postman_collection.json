@@ -487,6 +487,11 @@
 			"key": "server",
 			"value": "http://localhost:1337",
 			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthdmlAZ21haWwuY29tIiwiaWQiOiI2NDEwMzljNjIwYjljYzJjYTQxMWFiMmYiLCJpYXQiOjE2Nzg3ODQ5NzYsImV4cCI6MTY3ODgxMzc3Nn0.fAKpJVM4YIAxflMGU5P_k88D0lG0bwPs5LaAbqUIfWE",
+			"type": "string"
 		}
 	]
 }
