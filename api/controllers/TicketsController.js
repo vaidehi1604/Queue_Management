@@ -105,7 +105,7 @@ module.exports = {
 
     const { processed } = req.query;
     try {
-      console.log(req.userData.id);
+     
       const userfind = await Tickets.find({
         owner: req.userData.id,
         processed: processed === "false" ? false : true,
@@ -121,4 +121,27 @@ module.exports = {
       });
     }
   },
+
+  //admin can find process & unprocess ticket
+  adminfind: async (req, res) => {
+    const lang = req.getLocale();
+
+    const { processed } = req.query;
+    try {
+      const userfind = await Tickets.find({
+        processed: processed === "false" ? false : true,
+      });
+      console.log(userfind);
+      return res.status(200).json({
+        message: sails.__("dataProcessed", lang),
+        userfind: userfind,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: sails.__("dataNotProcessed", lang),
+      });
+    }
+  },
+
+
 };

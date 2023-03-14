@@ -22,6 +22,7 @@ module.exports.policies = {
     //change processed ticket and also update unprocess ticket
     "updateTickets": "isAdmin",
     "getTicket": "isAdmin",
+    "adminfind":"isAdmin",
     "*": "userLoggedIn",
   },
   PlaceController: {

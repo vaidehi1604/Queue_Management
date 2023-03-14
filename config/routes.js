@@ -30,4 +30,6 @@ module.exports.routes = {
   "POST /user/login": "UserController.userLogin",
   "POST /user/logout": "UserController.userLogout",
   "GET /user/ticket": "TicketsController.userfind",
+  "GET /admin/ticket": "TicketsController.adminfind",
+
 };
