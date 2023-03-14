@@ -24,13 +24,12 @@ module.exports = {
         ticketNo: places.prefix + newnum,
         processed: false,
         date: newDate,
-        owner:req.userData.id
-      }).fetch()
+        owner: req.userData.id,
+      }).fetch();
       console.log(newTicket);
       return res.status(201).json({
         message: sails.__("addData", lang),
-        newTicket:newTicket
-       
+        newTicket: newTicket,
       });
     } catch (error) {
       error: error;
@@ -66,19 +65,27 @@ module.exports = {
     try {
       const { id } = req.params;
       const tickets = await Tickets.findOne({ id });
+      console.log(tickets);
+      console.log(id);
       if (id == tickets.id) {
-       const processUpdate= await Tickets.updateOne({ id: id }).set({ processed: true });
-
-        const places = await Place.findOne({ id: tickets.placeId });
-       const unprocessTic= await Place.update({ id: tickets.placeId }).set({
-          unprocessTicket: places.unprocessTicket - 1,
-        });
-
-        return res.status(200).json({
-          message: sails.__("updateData", lang),
-          processUpdate:processUpdate,
-         
-        });
+        if (tickets.processed === false) {
+          const processUpdate = await Tickets.updateOne({ id: id }).set({
+            processed: true,
+          });
+          console.log(processUpdate);
+          const places = await Place.findOne({ id: tickets.placeId });
+          const unprocessTic = await Place.update({ id: tickets.placeId }).set({
+            unprocessTicket: places.unprocessTicket - 1,
+          });
+          return res.status(200).json({
+            message: sails.__("updateData", lang),
+            processUpdate: processUpdate,
+          });
+        }else{
+          return res.status(404).json({
+            message: sails.__("notUpdated", lang),
+          });
+        }
       } else {
         return res.status(404).json({
           message: sails.__("notUpdated", lang),
@@ -98,17 +105,15 @@ module.exports = {
 
     const { processed } = req.query;
     try {
-      // console.log(processed === "true" ? false : true);
       console.log(req.userData.id);
       const userfind = await Tickets.find({
         owner: req.userData.id,
         processed: processed === "false" ? false : true,
-      })
+      });
       console.log(userfind);
       return res.status(200).json({
-       
         message: sails.__("dataProcessed", lang),
-        userfind:userfind
+        userfind: userfind,
       });
     } catch (error) {
       return res.status(500).json({
