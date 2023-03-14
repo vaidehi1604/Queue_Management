@@ -49,7 +49,7 @@ module.exports = {
       console.log(user);
       const checkpass = await bcrypt.compare(password, user.password);
       if (checkpass === true) {
-        token = await jwt.sign({ email, password }, process.env.JWT_KEY, {
+        token = await jwt.sign({ email, id:user.id }, process.env.JWT_KEY, {
           expiresIn: "8h",
         });
       }
