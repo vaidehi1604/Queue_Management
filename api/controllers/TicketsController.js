@@ -24,10 +24,12 @@ module.exports = {
         ticketNo: places.prefix + newnum,
         processed: false,
         date: newDate,
+        owner:req.userData.id
       }).fetch()
       console.log(newTicket);
       return res.status(201).json({
         message: sails.__("addData", lang),
+        newTicket:newTicket
        
       });
     } catch (error) {
@@ -96,14 +98,17 @@ module.exports = {
 
     const { processed } = req.query;
     try {
-      console.log(processed == "false" ? false : true);
+      // console.log(processed === "true" ? false : true);
+      console.log(req.userData.id);
       const userfind = await Tickets.find({
         owner: req.userData.id,
-        processed: processed == "false" ? false : true,
-      });
+        processed: processed === "false" ? false : true,
+      })
+      console.log(userfind);
       return res.status(200).json({
+       
         message: sails.__("dataProcessed", lang),
-        User: userfind,
+        userfind:userfind
       });
     } catch (error) {
       return res.status(500).json({
