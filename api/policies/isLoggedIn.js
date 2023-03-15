@@ -9,7 +9,9 @@ module.exports = async (req, res, next) => {
     const token = await req.headers.authorization.split(" ")[1];
     console.log(token);
     //verify token
-    const decode = await jwt.verify(token, process.env.JWT_KEY);
+    const decode = await sails.helpers.verifyToken.with({
+      token: token,
+    });
     req.userData = decode;
     const user = await User.findOne({ email: decode.email });
     if (!decode) {

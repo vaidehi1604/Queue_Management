@@ -49,18 +49,27 @@ module.exports = {
       console.log(user);
       const checkpass = await bcrypt.compare(password, user.password);
       if (checkpass === true) {
-        token = await jwt.sign({ email, id:user.id }, process.env.JWT_KEY, {
-          expiresIn: "8h",
+        try {
+          const token = await sails.helpers.generateToken(email, user.id, "8h");
+          console.log(token);
+          const userUpdate = await User.updateOne({ email }, { token: token });
+          return res.status(200).json({
+            message: sails.__("token", lang),
+            token: token,
+          });
+        } catch (error) {
+          console.log(error);
+          return res.status(500).json({
+            error: error + "err",
+            message: sails.__("nottoken", lang),
+          });
+        }
+      } else {
+        return res.status(200).json({
+          message: sails.__("token", lang),
+          token: token,
         });
       }
-      console.log(token);
-      await User.updateOne({ email: email }, { token: token });
-      console.log(token);
-      return res.status(200).json({
-        message: sails.__("token", lang),
-
-        token: token,
-      });
     } catch (error) {
       error: error;
       return res.status(500).json({
@@ -75,7 +84,7 @@ module.exports = {
     const lang = req.getLocale();
 
     try {
-      const { email } = req.body;
+      const { email } = req.userData;
       console.log(email);
       const users = await User.findOne({ email });
       console.log(users);
@@ -90,6 +99,4 @@ module.exports = {
       });
     }
   },
-
-
 };

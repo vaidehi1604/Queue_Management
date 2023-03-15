@@ -2,8 +2,8 @@
 	"Welcome": "Welcome",
 	"A brand new app.": "A brand new app.",
 	"email": "Email already exists!!",
-	"Add":"Added successfully!!",
-	"adminLogout":"Logout successfully!!",
+	"Add": "Added successfully!!",
+	"adminLogout": "Logout successfully!!",
 	"token": "Token  generated!!",
 	"notToken": "Token not generated!!",
 	"userLogout": "Logout successfully!!",
@@ -21,7 +21,7 @@
 	"unTicket": "Unprocess Tickets with place",
 	"notTicket": "Ticket not found!",
 	"authFail": "Authentication failed",
-	"notmatch": "Token not match"
-
-
+	"notmatch": "Token not match",
+	"nottoken": "nottoken",
+	"samePlace":"Place already exists!!"
 }
