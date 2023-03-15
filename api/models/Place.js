@@ -7,7 +7,7 @@
 
 module.exports.place = {
   attributes: {
-    place: {
+  
       place: {
         type: "String",
         required: true,
@@ -21,9 +21,9 @@ module.exports.place = {
         unique: true,
       },
       tickets: {
-        collection: "tickets",
+        collection: "Tickets",
         via: "placeId",
       },
-    },
+    
   },
 };
