@@ -14,7 +14,7 @@ module.exports = {
       const { place, unprocessTicket, prefix } = req.body;
       const newPlace = await Place.create({
         place,
-        unprocessTicket,
+        unprocessTicket: 0,
         prefix,
       }).fetch();
       return res.status(201).send({
@@ -63,7 +63,7 @@ module.exports = {
       const { id } = req.params;
       const place = await Place.findOne(id);
 
-      if (id === place.id) {
+      if (place) {
         const updateplace = await Place.updateOne({ id: id }).set(req.body);
         return res.status(200).json({
           message: sails.__("updateData", lang),
@@ -88,6 +88,7 @@ module.exports = {
     const lang = req.getLocale();
     try {
       const places = await Place.find();
+
       console.log(places);
       return res.status(200).json({
         message: sails.__("getData", lang),
