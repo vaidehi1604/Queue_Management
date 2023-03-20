@@ -33,7 +33,6 @@ module.exports.policies = {
 
   UserController: {
     "userLogout": "isLoggedIn",
-    "userTicket": "userLoggedIn",
     "*": true,
   },
 };

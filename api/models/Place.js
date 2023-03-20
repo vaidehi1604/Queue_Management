@@ -9,20 +9,21 @@ module.exports.place = {
   attributes: {
   
       place: {
-        type: "String",
+        type: 'string',
         required: true,
         unique: true,
       },
       unprocessTicket: {
-        type: "number",
+        type: 'number',
+        defaultsTo:0
       },
       prefix: {
-        type: "string",
+        type: 'string',
         unique: true,
       },
       tickets: {
-        collection: "Tickets",
-        via: "placeId",
+        collection: 'tickets',
+        via: 'placeId',
       },
     
   },

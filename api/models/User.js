@@ -10,22 +10,22 @@ const { roles } = sails.config.constants;
 module.exports.User = {
   attributes: {
     username: {
-      type: "String",
+      type: 'String',
       required: true,
     },
     email: {
-      type: "String",
+      type: 'String',
       required: true,
       isEmail: true,
       unique: true,
     },
 
     password: {
-      type: "String",
+      type: 'String',
       required: true,
     },
     role: {
-      type: "String",
+      type: 'String',
       isIn: [roles.user, roles.admin],
       defaultsTo: roles.user,
     },

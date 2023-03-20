@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -9,15 +8,16 @@ module.exports = {
   userSignup: async (req, res) => {
     const lang = req.getLocale();
     const { username, email, password, role } = req.body;
-
+    const users = await User.find({ email: req.body.email });
+    if(users){
+    if (users.length >= 1) {
+      return res.status(409).json({
+        message: sails.__("email", lang),
+      });
+    }
+    else{
     bcrypt.hash(password, 10, async (err, hash) => {
       try {
-        const users = await User.find({ email: req.body.email });
-        if (users.length >= 1) {
-          return res.status(409).json({
-            message: sails.__("email", lang),
-          });
-        }
 
         const newUser = await User.create({
           username,
@@ -35,7 +35,12 @@ module.exports = {
           message: sails.__("notAdded", lang),
         });
       }
-    });
+    });}}
+    else{
+      return res.status(500).json({
+        message: sails.__("notAdded", lang),
+      });
+    }
   },
 
   //user login
