@@ -4,7 +4,6 @@ dotenv.config();
 
 module.exports = {
   //user signup
-
   userSignup: async (req, res) => {
     const lang = req.getLocale();
     const { username, email, password, role } = req.body;
