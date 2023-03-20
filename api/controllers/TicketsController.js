@@ -18,15 +18,18 @@ module.exports = {
         placeId: places.id,
       });
       const newnum = newNo + 1;
+      var str = ""+newnum;
+      var pad = "000";
+      var newtick = pad.substring(0, pad.length - str.length) + str;
 
       const newTicket = await Tickets.create({
         placeId: req.params.placeId,
-        ticketNo: places.prefix + newnum,
+        ticketNo: places.prefix + newtick,
         processed: false,
         date: newDate,
         owner: req.userData.id,
       }).fetch();
-      
+
       console.log(newTicket);
       return res.status(201).json({
         message: sails.__("addData", lang),
@@ -82,7 +85,7 @@ module.exports = {
             message: sails.__("updateData", lang),
             processUpdate: processUpdate,
           });
-        }else{
+        } else {
           return res.status(404).json({
             message: sails.__("notUpdated", lang),
           });
@@ -106,7 +109,7 @@ module.exports = {
 
     const { processed } = req.query;
     try {
-     console.log(req.userData.id);
+      console.log(req.userData.id);
       const userfind = await Tickets.find({
         owner: req.userData.id,
         processed: processed === "false" ? false : true,
@@ -144,18 +147,30 @@ module.exports = {
     }
   },
 
-//place to find 
+  //place to find
 
-getPlaceTicket: async (req, res) => {
+  getPlaceTicket: async (req, res) => {
     const lang = req.getLocale();
     try {
-      const {placeId}=req.params;
-      const tickets = await Tickets.find({placeId});
+      const { processed } = req.query;
+      const { placeId } = req.params;
+      const tickets = await Tickets.find({ placeId });
       console.log(tickets);
-      return res.status(200).json({
-        message: sails.__("getData", lang),
-        tickets: tickets,
-      });
+      try {
+        const userfind = await Tickets.find({
+          processed: processed === "false" ? false : true,
+        });
+        console.log(userfind);
+        return res.status(200).json({
+          message: sails.__("dataProcessed", lang),
+          userfind: userfind,
+        });
+      } catch (error) {
+        return res.status(500).json({
+          message: sails.__("dataNotProcessed", lang),
+        });
+      }
+     
     } catch (error) {
       error: error;
       return res.status(500).json({
