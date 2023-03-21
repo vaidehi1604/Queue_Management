@@ -14,7 +14,7 @@ module.exports.place = {
         unique: true,
       },
       unprocessTicket: {
-        type: 'number',
+        type:'number',
         defaultsTo:0
       },
       prefix: {

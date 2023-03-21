@@ -18,10 +18,10 @@ module.exports = {
         placeId: places.id,
       });
       const newnum = newNo + 1;
-      var str = ""+newnum;
+      var str = "" + newnum;
       var pad = "000";
       var newtick = pad.substring(0, pad.length - str.length) + str;
-
+      console.log(newtick);
       const newTicket = await Tickets.create({
         placeId: req.params.placeId,
         ticketNo: places.prefix + newtick,
@@ -29,15 +29,21 @@ module.exports = {
         date: newDate,
         owner: req.userData.id,
       }).fetch();
+      if (newTicket) {
+        const unprocessTic = await Place.updateOne({
+          id: req.params.placeId,
+        }).set({
+          unprocessTicket: places.unprocessTicket * 1 + 1,
+        });
+      }
 
-      console.log(newTicket);
       return res.status(201).json({
         message: sails.__("addData", lang),
         newTicket: newTicket,
       });
     } catch (error) {
-      error: error;
       res.status(500).json({
+        error: error,
         message: sails.__("notAdded", lang),
       });
     }
@@ -170,7 +176,6 @@ module.exports = {
           message: sails.__("dataNotProcessed", lang),
         });
       }
-     
     } catch (error) {
       error: error;
       return res.status(500).json({
