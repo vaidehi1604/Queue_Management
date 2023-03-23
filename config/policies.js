@@ -28,6 +28,8 @@ module.exports.policies = {
   },
   PlaceController: {
     "addPlace": "isAdmin",
+    "updatePlace": "isAdmin",
+    "deletePlace": "isAdmin",
     "getPlace":"isLoggedIn"
   },
 

@@ -7,7 +7,7 @@
 
 const { roles } = sails.config.constants;
 
-module.exports.User = {
+module.exports = {
   attributes: {
     username: {
       type: 'String',

@@ -17,7 +17,6 @@ module.exports.routes = {
 
   //Ticket routes
   "POST /addticket/:placeId": "TicketsController.addTickets",
-  "PATCH /ticket": "TicketsController.updateProcess",
   "GET /ticket/show": "TicketsController.getTicket",
 
   //User routes

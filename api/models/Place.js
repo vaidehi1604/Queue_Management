@@ -5,7 +5,7 @@
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
 
-module.exports.place = {
+module.exports = {
   attributes: {
   
       place: {

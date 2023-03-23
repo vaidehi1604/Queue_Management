@@ -7,35 +7,38 @@ module.exports = {
   userSignup: async (req, res) => {
     const lang = req.getLocale();
     const { username, email, password, role } = req.body;
+    //find user
     const users = await User.find({ email: req.body.email });
-    if(users){
-    if (users.length >= 1) {
-      return res.status(409).json({
-        message: sails.__("email", lang),
-      });
-    }
-    else{
-    bcrypt.hash(password, 10, async (err, hash) => {
-      try {
-
-        const newUser = await User.create({
-          username,
-          email,
-          password: hash,
-          role,
-        }).fetch();
-
-        console.log(newUser);
-        return res.status(201).json({
-          message: sails.__("addData", lang),
+    //user find or not
+    if (users) {
+      // check email already exists or not
+      if (users.length >= 1) {
+        return res.status(409).json({
+          message: sails.__("email", lang),
         });
-      } catch (error) {
-        return res.status(500).json({
-          message: sails.__("notAdded", lang),
-        });
+      } else {
+        //creating hash password using hashSync
+        const hash = bcrypt.hashSync(password, 10);
+        try {
+          //create user
+          const newUser = await User.create({
+            username,
+            email,
+            password: hash,
+            role,
+          }).fetch();
+
+          return res.status(201).json({
+            message: sails.__("addData", lang),
+            newUser: newUser,
+          });
+        } catch (error) {
+          return res.status(500).json({
+            message: sails.__("notAdded", lang),
+          });
+        }
       }
-    });}}
-    else{
+    } else {
       return res.status(500).json({
         message: sails.__("notAdded", lang),
       });
@@ -48,15 +51,18 @@ module.exports = {
 
     try {
       const { email, password } = req.body;
-      console.log(req.body);
+      //find user
       const user = await User.findOne({ email: email });
-      console.log(user);
+      //compare password
       const checkpass = await bcrypt.compare(password, user.password);
+      //check password
       if (checkpass === true) {
         try {
+          //generate token using helpers
           const token = await sails.helpers.generateToken(email, user.id, "8h");
-          console.log(token);
-          const userUpdate = await User.updateOne({ email }, { token: token });
+          //add token to database
+          await User.updateOne({ email }, { token: token });
+
           return res.status(200).json({
             message: sails.__("token", lang),
             token: token,
@@ -88,11 +94,12 @@ module.exports = {
     const lang = req.getLocale();
 
     try {
+      //curent login user
       const { email } = req.userData;
-      console.log(email);
+      //find user
       const users = await User.findOne({ email });
-      console.log(users);
-      const userUpdate = await User.updateOne({ email }).set({ token: " " });
+      //update database token null
+      await User.updateOne({ email }).set({ token: " " });
 
       return res.status(200).json({
         message: sails.__("userLogout", lang),

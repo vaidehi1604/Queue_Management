@@ -5,7 +5,7 @@
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
 
-module.exports.Tickets = {
+module.exports = {
   attributes: {
     placeId: {
       model: 'Place',
@@ -19,7 +19,7 @@ module.exports.Tickets = {
       defaultsTo: false,
     },
     date: {
-      type: 'date',
+      type: 'string',
     },
     owner: {
       model: 'user',
