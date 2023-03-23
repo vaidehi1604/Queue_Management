@@ -33,7 +33,7 @@ module.exports = {
 
   deletePlace: async (req, res) => {
     const lang = req.getLocale();
-    // try {
+    try {
       const { id } = req.params;
       //find place
       const place = await Place.find({ id: id });
@@ -50,11 +50,11 @@ module.exports = {
           message: sails.__("notDeleted", lang),
         });
       }
-    // } catch (error) {
-    //   return res.status(500).json({
-    //     message: sails.__("notDeleted", lang),
-    //   });
-    // }
+    } catch (error) {
+      return res.status(500).json({
+        message: sails.__("notDeleted", lang),
+      });
+    }
   },
 
   //Update place
