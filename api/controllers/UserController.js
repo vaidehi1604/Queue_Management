@@ -20,7 +20,7 @@ module.exports = {
         //creating hash password using hashSync
         const hash = bcrypt.hashSync(password, 10);
         try {
-          //create user
+          //create user 
           const newUser = await User.create({
             username,
             email,
