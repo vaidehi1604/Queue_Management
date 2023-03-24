@@ -8,7 +8,7 @@
 module.exports = {
   attributes: {
     placeId: {
-      model: 'Place',
+      model: 'place',
     },
     ticketNo: {
       type: 'string',
