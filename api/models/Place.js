@@ -7,24 +7,22 @@
 
 module.exports = {
   attributes: {
-  
-      place: {
-        type: 'string',
-        required: true,
-        unique: true,
-      },
-      unprocessTicket: {
-        type:'number',
-        defaultsTo:0
-      },
-      prefix: {
-        type: 'string',
-        unique: true,
-      },
-      tickets: {
-        collection: 'tickets',
-        via: 'placeId',
-      },
-    
+    place: {
+      type: "string",
+      required: true,
+      unique: true,
+    },
+    unprocessTicket: {
+      type: "number",
+      defaultsTo: 0,
+    },
+    prefix: {
+      type: "string",
+      unique: true,
+    },
+    tickets: {
+      collection: "tickets",
+      via: "placeId",
+    },
   },
 };

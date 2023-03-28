@@ -8,21 +8,21 @@
 module.exports = {
   attributes: {
     placeId: {
-      model: 'place',
+      model: "place",
     },
     ticketNo: {
-      type: 'string',
+      type: "string",
       unique: true,
     },
     processed: {
-      type: 'boolean',
+      type: "boolean",
       defaultsTo: false,
     },
     date: {
-      type: 'string',
+      type: "string",
     },
     owner: {
-      model: 'user',
+      model: "user",
     },
   },
 };
