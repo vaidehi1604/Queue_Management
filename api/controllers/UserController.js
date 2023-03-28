@@ -1,5 +1,5 @@
-const bcrypt = require("bcrypt");
-const dotenv = require("dotenv");
+const bcrypt = require('bcrypt');
+const dotenv = require('dotenv');
 dotenv.config();
 
 module.exports = {
@@ -14,33 +14,32 @@ module.exports = {
       // check email already exists or not
       if (users.length >= 1) {
         return res.status(409).json({
-          message: sails.__("email", lang),
+          message: sails.__('email', lang),
         });
       } else {
         //creating hash password using hashSync
         const hash = bcrypt.hashSync(password, 10);
-        try {
-          //create user 
-          const newUser = await User.create({
+        try{
+         const newUser = await User.create({
             username,
             email,
             password: hash,
             role,
-          }).fetch();
-
-          return res.status(201).json({
-            message: sails.__("addData", lang),
+         }).fetch();
+        return res.status(201).json({
+            message: sails.__('addData', lang),
             newUser: newUser,
           });
-        } catch (error) {
+        }catch (error) {
           return res.status(500).json({
-            message: sails.__("notAdded", lang),
+            error:error,
+            message: sails.__('notAdded', lang),
           });
         }
       }
     } else {
       return res.status(500).json({
-        message: sails.__("notAdded", lang),
+        message: sails.__('notAdded', lang),
       });
     }
   },
@@ -59,31 +58,31 @@ module.exports = {
       if (checkpass === true) {
         try {
           //generate token using helpers
-          const token = await sails.helpers.generateToken(email, user.id, "8h");
+          const token = await sails.helpers.generateToken(email, user.id, '8h');
           //add token to database
           await User.updateOne({ email }, { token: token });
 
           return res.status(200).json({
-            message: sails.__("token", lang),
+            message: sails.__('token', lang),
             token: token,
           });
         } catch (error) {
           console.log(error);
           return res.status(500).json({
-            error: error + "err",
-            message: sails.__("nottoken", lang),
+            error: error ,
+            message: sails.__('nottoken', lang),
           });
         }
       } else {
         return res.status(200).json({
-          message: sails.__("token", lang),
+          message: sails.__('token', lang),
           token: token,
         });
       }
     } catch (error) {
-      error: error;
       return res.status(500).json({
-        message: sails.__("notToken", lang),
+        error: error,
+        message: sails.__('notToken', lang),
       });
     }
   },
@@ -97,16 +96,17 @@ module.exports = {
       //curent login user
       const { email } = req.userData;
       //find user
-      const users = await User.findOne({ email });
+      await User.findOne({ email });
       //update database token null
-      await User.updateOne({ email }).set({ token: " " });
+      await User.updateOne({ email }).set({ token: ' ' });
 
       return res.status(200).json({
-        message: sails.__("userLogout", lang),
+        message: sails.__('userLogout', lang),
       });
     } catch (error) {
       return res.status(500).json({
-        message: sails.__("notLogout", lang),
+        error:error,
+        message: sails.__('notLogout', lang),
       });
     }
   },

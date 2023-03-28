@@ -11,20 +11,21 @@ module.exports = {
   addPlace: async (req, res) => {
     const lang = req.getLocale();
     try {
-      const { place, unprocessTicket, prefix } = req.body;
+      const { place, unprocessTicket,prefix } = req.body;
       //create place
       const newPlace = await Place.create({
         place,
-        unprocessTicket: 0,
+        unprocessTicket,
         prefix,
       }).fetch();
       return res.status(201).send({
-        message: sails.__("addData", lang),
+        message: sails.__('addData', lang),
         newPlace: newPlace,
       });
     } catch (error) {
       return res.status(500).send({
-        message: sails.__("notAdded", lang),
+        error:error,
+        message: sails.__('notAdded', lang),
       });
     }
   },
@@ -42,17 +43,18 @@ module.exports = {
         //delete place with id
         const deleted = await Place.destroyOne({ id: id });
         return res.status(200).json({
-          message: sails.__("deleteData", lang),
+          message: sails.__('deleteData', lang),
           deleted:deleted
         });
       } else {
         return res.status(500).json({
-          message: sails.__("notDeleted", lang),
+          message: sails.__('notDeleted', lang),
         });
       }
     } catch (error) {
       return res.status(500).json({
-        message: sails.__("notDeleted", lang),
+        error:error,
+        message: sails.__('notDeleted', lang),
       });
     }
   },
@@ -64,7 +66,7 @@ module.exports = {
 
     try {
       const { id } = req.params;
-      const {place,prefix,unprocessTicket}=req.body
+      const {place,prefix,unprocessTicket}=req.body;
       //find place
       const places = await Place.findOne(id);
       //check place find or not
@@ -72,18 +74,18 @@ module.exports = {
         //update place
         const updateplace = await Place.updateOne({ id: id }).set({place,prefix,unprocessTicket});
         return res.status(200).json({
-          message: sails.__("updateData", lang),
+          message: sails.__('updateData', lang),
           updateplace: updateplace,
         });
       } else {
         return res.status(404).json({
-          message: sails.__("notUpdated", lang),
+          message: sails.__('notUpdated', lang),
         });
       }
     } catch (error) {
-      error: error;
       return res.status(500).json({
-        message: sails.__("notUpdated", lang),
+        error: error,
+        message: sails.__('notUpdated', lang),
       });
     }
   },
@@ -96,13 +98,13 @@ module.exports = {
       //find place
       const places = await Place.find();
       return res.status(200).json({
-        message: sails.__("getData", lang),
+        message: sails.__('getData', lang),
         placeData: places,
       });
     } catch (error) {
-      error: error;
       return res.status(500).json({
-        message: sails.__("notGet", lang),
+        error:error,
+        message: sails.__('notGet', lang),
       });
     }
   },
