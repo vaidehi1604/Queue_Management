@@ -1,31 +1,31 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 module.exports = {
-  friendlyName: "Generate token",
+  friendlyName: 'Generate token',
 
-  description: "",
+  description: '',
 
   inputs: {
     email: {
-      type: "string",
+      type: 'string',
       required: true,
     },
     id: {
-      type: "string",
+      type: 'string',
       required: true,
     },
     expiresIn: {
-      type: "string",
+      type: 'string',
       required: true,
     },
   },
 
   exits: {
     success: {
-      description: "Token is generate.",
+      description: 'Token is generate.',
     },
     error: {
-      description: "Token is not generate",
+      description: 'Token is not generate',
     },
   },
 
