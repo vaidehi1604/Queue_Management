@@ -22,8 +22,8 @@ module.exports = {
       });
       //ticket num should be 3 digit
       const newnum = newNo + 1;
-      var str = '' + newnum;
-      var pad = '000';
+      var str = "" + newnum;
+      var pad = "000";
       var newtick = pad.substring(0, pad.length - str.length) + str;
       //generate ticket
       const newTicket = await Tickets.create({
@@ -43,13 +43,13 @@ module.exports = {
       }
 
       return res.status(201).json({
-        message: sails.__('addData', lang),
+        message: sails.__("addData", lang),
         newTicket: newTicket,
       });
     } catch (error) {
       res.status(500).json({
         error: error,
-        message: sails.__('notAdded', lang),
+        message: sails.__("notAdded", lang),
       });
     }
   },
@@ -62,13 +62,13 @@ module.exports = {
       const tickets = await Tickets.find();
       console.log(tickets);
       return res.status(200).json({
-        message: sails.__('getData', lang),
+        message: sails.__("getData", lang),
         tickets: tickets,
       });
     } catch (error) {
       return res.status(500).json({
         error: error,
-        message: sails.__('notGet', lang),
+        message: sails.__("notGet", lang),
       });
     }
   },
@@ -96,23 +96,23 @@ module.exports = {
             unprocessTicket: places.unprocessTicket - 1,
           });
           return res.status(200).json({
-            message: sails.__('updateData', lang),
+            message: sails.__("updateData", lang),
             processUpdate: processUpdate,
           });
         } else {
           return res.status(404).json({
-            message: sails.__('notUpdated', lang),
+            message: sails.__("notUpdated", lang),
           });
         }
       } else {
         return res.status(404).json({
-          message: sails.__('notUpdated', lang),
+          message: sails.__("notUpdated", lang),
         });
       }
     } catch (error) {
       return res.status(500).json({
-        error:error,
-        message: sails.__('notUpdated', lang),
+        error: error,
+        message: sails.__("notUpdated", lang),
       });
     }
   },
@@ -127,17 +127,17 @@ module.exports = {
       //find current user ticket
       const userfind = await Tickets.find({
         owner: req.userData.id,
-        processed: processed === 'false' ? false : true,
+        processed: processed === "false" ? false : true,
       });
       console.log(userfind);
       return res.status(200).json({
-        message: sails.__('dataProcessed', lang),
+        message: sails.__("dataProcessed", lang),
         userfind: userfind,
       });
     } catch (error) {
       return res.status(500).json({
-        error:error,
-        message: sails.__('dataNotProcessed', lang),
+        error: error,
+        message: sails.__("dataNotProcessed", lang),
       });
     }
   },
@@ -149,17 +149,17 @@ module.exports = {
     try {
       //admin can find process and unprocess ticket
       const userfind = await Tickets.find({
-        processed: processed === 'false' ? false : true,
+        processed: processed === "false" ? false : true,
       });
       console.log(userfind);
       return res.status(200).json({
-        message: sails.__('dataProcessed', lang),
+        message: sails.__("dataProcessed", lang),
         userfind: userfind,
       });
     } catch (error) {
       return res.status(500).json({
-        error:error,
-        message: sails.__('dataNotProcessed', lang),
+        error: error,
+        message: sails.__("dataNotProcessed", lang),
       });
     }
   },
@@ -176,22 +176,22 @@ module.exports = {
       try {
         //place to find ticket processed or not
         const userfind = await Tickets.find({
-          processed: processed === 'false' ? false : true,
+          processed: processed === "false" ? false : true,
         });
         return res.status(200).json({
-          message: sails.__('dataProcessed', lang),
+          message: sails.__("dataProcessed", lang),
           userfind: userfind,
         });
       } catch (error) {
         return res.status(500).json({
-          error:error,
-          message: sails.__('dataNotProcessed', lang),
+          error: error,
+          message: sails.__("dataNotProcessed", lang),
         });
       }
     } catch (error) {
       return res.status(500).json({
-        error:error,
-        message: sails.__('notGet', lang),
+        error: error,
+        message: sails.__("notGet", lang),
       });
     }
   },

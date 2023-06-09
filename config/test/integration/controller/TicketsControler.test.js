@@ -1,12 +1,12 @@
 var supertest = require("supertest");
 
-
 describe("TicketsController", () => {
   let userToken;
   let placeId;
+  let ticketId;
   let adminToken;
   let userId;
-  
+
   //create admin
   it("create User", (done) => {
     supertest(sails.hooks.http.app)
@@ -47,7 +47,6 @@ describe("TicketsController", () => {
       });
   });
 
-
   //create user
   it("create User", (done) => {
     supertest(sails.hooks.http.app)
@@ -86,8 +85,8 @@ describe("TicketsController", () => {
         done();
       });
   });
-//
-it("add place", (done) => {
+  //
+  it("add place", (done) => {
     supertest(sails.hooks.http.app)
       .post("/admin/place")
       .set("Authorization", `Bearer ${adminToken}`)
@@ -102,20 +101,20 @@ it("add place", (done) => {
           return done(err);
         }
         console.log(res.body);
-        placeId=res.body.newPlace.id;
+        placeId = res.body.newPlace.id;
         done();
       });
   });
 
-//add tickets
-it("add tickets", (done) => {
+  //add tickets
+  it("add tickets", (done) => {
     supertest(sails.hooks.http.app)
-      .post("/addticket/"+placeId)
+      .post("/addticket/" + placeId)
       .set("Authorization", `Bearer ${userToken}`)
       .send({
-        placeId:placeId,
+        placeId: placeId,
         unprocessTicket: 2,
-        processed:false,
+        processed: false,
       })
       .expect(201)
       .end((err, res) => {
@@ -123,11 +122,13 @@ it("add tickets", (done) => {
           return done(err);
         }
         console.log(res.body);
+        ticketId = res.body.newTicket.id;
+        console.log(ticketId);
         done();
       });
   });
 
-  //get tickets
+  //get current user ticket
   it("get all tickets", (done) => {
     supertest(sails.hooks.http.app)
       .get("/user/ticket?processed=false")
@@ -143,7 +144,19 @@ it("add tickets", (done) => {
       });
   });
 
-//get placeId to ticket 
+  //get placeId to ticket
+  it("get place vise tickets", (done) => {
+    supertest(sails.hooks.http.app)
+      .get("/user/ticket?processed=false")
+      .set("Authorization", `Bearer ${userToken}`)
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        console.log(res.body);
 
-
-})
+        done();
+      });
+  });
+});

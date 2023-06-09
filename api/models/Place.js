@@ -22,7 +22,7 @@ module.exports = {
     },
     tickets: {
       collection: "tickets",
-      via: "placeId",
+      via: "placeId"
     },
   },
 };
